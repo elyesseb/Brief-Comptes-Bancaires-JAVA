@@ -4,35 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Compte {
+	private Long numeroCompte;
+	private TypeCompte typeCompte;
+	private Titulaire titulaire;
+	private double soldeCompte;
+	private List<Operation> listeDesOperations = new ArrayList<>();
+	
+	public Compte() {
+		this(0L, 0F);
+	}
+	
 
-    private int numCompte;
-    private float soldeCompte;
-    private TypeCompte typeCompte;
-    private Titulaire titulaire;
-    private List<Operation> listeDesOperations = new ArrayList<>();
-    
-	public Compte(int numCompte, float soldeCompte, TypeCompte typeCompte, Titulaire titulaire) {
+	public Compte(Long numeroCompte, Float soldeCompte) {
 		super();
-		this.numCompte = numCompte;
+		this.numeroCompte = numeroCompte;
+		this.typeCompte = new TypeCompte();
+		this.titulaire = new Titulaire();
 		this.soldeCompte = soldeCompte;
-		this.typeCompte = typeCompte;
-		this.titulaire = titulaire;
+	}
+	
+	public Long getNumeroCompte() {
+		return numeroCompte;
 	}
 
-	public int getNumCompte() {
-		return numCompte;
-	}
-
-	public void setNumCompte(int numCompte) {
-		this.numCompte = numCompte;
-	}
-
-	public float getSoldeCompte() {
-		return soldeCompte;
-	}
-
-	public void setSoldeCompte(float soldeCompte) {
-		this.soldeCompte = soldeCompte;
+	public void setNumeroCompte(Long numeroCompte) {
+		this.numeroCompte = numeroCompte;
 	}
 
 	public TypeCompte getTypeCompte() {
@@ -43,12 +39,21 @@ public class Compte {
 		this.typeCompte = typeCompte;
 	}
 
+
 	public Titulaire getTitulaire() {
 		return titulaire;
 	}
 
 	public void setTitulaire(Titulaire titulaire) {
 		this.titulaire = titulaire;
+	}
+
+	public double getSoldeCompte() {
+		return soldeCompte;
+	}
+
+	public void setSoldeCompte(double d) {
+		this.soldeCompte = d;
 	}
 
 	public List<Operation> getListeDesOperations() {
@@ -58,15 +63,12 @@ public class Compte {
 	public void setListeDesOperations(List<Operation> listeDesOperations) {
 		this.listeDesOperations = listeDesOperations;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Compte [numCompte=" + numCompte + ", soldeCompte=" + soldeCompte + ", typeCompte=" + typeCompte
-				+ ", titulaire=" + titulaire + "]";
+		return "Compte [numeroCompte=" + numeroCompte + ", typeCompte=" + typeCompte + ", titulaire=" + titulaire
+				+ ", soldeCompte=" + soldeCompte + "]";
 	}
 	
 	
-
-    
-
 }

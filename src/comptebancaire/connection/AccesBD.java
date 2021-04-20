@@ -1,45 +1,25 @@
 package comptebancaire.connection;
-/**	=====================================================
- * @author Philippe Bouget
- *	Package : fr.bouget.connection
- *
- * exemple de pilote pour la base de donn�es MySQL :
- * com.mysql.jdbc.Driver (dans le jar)
- * 
- * Connexion � MySQL :
- * 
- * identifiant : root
- * mdp : root
- * url : jdbc:mysql://localhost:3306/bd-avion
-========================================================
- */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.swing.JOptionPane;
 
-
-/** 	on pourrait appeler cette classe GestionJDBC
- * 		son r�le consiste � g�rer la connection � la Base
- * 		de donn�es bd-avion de MySQL.
- */
 
 public class AccesBD {
 
 
-	private static String utilisateur="root";
-	private static String motDePasse="";
+	private static String utilisateur="brief_banque";
+	private static String motDePasse="comptebancaire";
 	private static String pilote = "com.mysql.cj.jdbc.Driver";
-	private static String url = "jdbc:mysql://localhost:3306/banque?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static String url = "jdbc:mysql://localhost:3306/brief_banque?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 
-	/* 	on d�clare un objet de la classe Connection de java.sql
-	 * 	Il permet de g�rer la connexion entre notre programme java
-	 * 	et la base de donn�es.
+	/* 	on déclare un objet de la classe Connection de java.sql
+	 * 	Il permet de gérer la connexion entre notre programme java
+	 * 	et la base de données.
 	 */
 	private static Connection connexion=null;
 
@@ -59,7 +39,7 @@ public class AccesBD {
 	}
 	
 	/**
-	 * M�thode qui retourne un objet de type Connection
+	 * Méthode qui retourne un objet de type Connection
 	 * @return Connection
 	 */
 	public synchronized static Connection getConnection()
@@ -72,14 +52,14 @@ public class AccesBD {
 		}catch (Exception e)
 			{
 				System.out.println(e);
-				JOptionPane.showMessageDialog(null,e.getMessage(),"Connexion � MySQL",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null,e.getMessage(),"Connexion à MySQL",JOptionPane.WARNING_MESSAGE);
 			}
 
 		return connexion;
 	}
 
 	/**
-	 * m�thode de fermeture d'un objet de type connection
+	 * méthode de fermeture d'un objet de type connection
 	 */
 	public static void fermerConnection(Connection connexion)
 	{
@@ -99,7 +79,7 @@ public class AccesBD {
 	}
 
 	/**
-	 * m�thode de fermeture d'un objet de type connection
+	 * méthode de fermeture d'un objet de type connection
 	 */
 	public static void fermerConnection()
 	{
@@ -173,7 +153,7 @@ public class AccesBD {
 		return utilisateur;
 	}
 	/**
-	 *	m�thode d'ex�cution d'une requ�te (SELECT) pour renvoyer un objet de type ResultSet
+	 *	méthode d'exécution d'une requête (SELECT) pour renvoyer un objet de type ResultSet
 	 *	@param requete String
 	 *	@return resultat ResultSet
 	 */
@@ -181,11 +161,11 @@ public class AccesBD {
 
 	{
 		/*
-		 * 	On d�clare un objet de type Statement que l'on nomme instruction. Cet
-		 * 	objet soumet la requ�te � la base de donn�es dans MySQL.
-		 * 	On d�clare un objet de type ResultSet que l'on nomme resultat. cet objet
-		 * 	est retourn� pour encapsuler les r�sultats de la requ�te. Il va nous permettre
-		 * 	de manipuler les r�sultats de la requ�te.
+		 * 	On déclare un objet de type Statement que l'on nomme instruction. Cet
+		 * 	objet soumet la requête à la base de données dans MySQL.
+		 * 	On déclare un objet de type ResultSet que l'on nomme resultat. cet objet
+		 * 	est retourné pour encapsuler les résultats de la requête. Il va nous permettre
+		 * 	de manipuler les résultats de la requête.
 		 *
 		 */
 		Statement statement = null;
@@ -201,31 +181,31 @@ public class AccesBD {
 			 *
 			 *
 			 * TYPE_SCROLL_INSENSITIVE :
-			 * Cette valeur indique que le curseur peut �tre d�plac� dans les deux sens,
-			 * mais aussi arbitrairement (de mani�re absolue ou relative).
+			 * Cette valeur indique que le curseur peut être déplacé dans les deux sens,
+			 * mais aussi arbitrairement (de manière absolue ou relative).
 			 * Le terme insensitive indique que le ResultSet est insensible aux modifications
-			 * des valeurs dans la base de donn�es. Cela d�finit en fait une vue statique des donn�es
+			 * des valeurs dans la base de données. Cela définit en fait une vue statique des données
 			 * contenues dans le ResultSet.
 			 *
 			 * CONCUR_UPDATABLE :
-			 * Cette valeur indique que l'on peut modifier les donn�es de la base via le ResultSet.
+			 * Cette valeur indique que l'on peut modifier les données de la base via le ResultSet.
 			 */
 
 			int type = ResultSet.TYPE_SCROLL_SENSITIVE;
 			int mode = ResultSet.CONCUR_UPDATABLE;
 
 			/* 	On peut traduire Statement par ordre ou instruction.
-			 * 	La m�thode createStatement() nous retourne un objet de type Statement.
-			 * 	Nous l'avons appel� avec la m�thode getConnection() qui nous renvoie
+			 * 	La méthode createStatement() nous retourne un objet de type Statement.
+			 * 	Nous l'avons appelé avec la méthode getConnection() qui nous renvoie
 			 * 	un objet de type Connexion.
-			 * 	D�s lors, nous pouvons utiliser l'objet instruction pour interroger
-			 * 	la base de donn�es Oracle.
+			 * 	Dès lors, nous pouvons utiliser l'objet instruction pour interroger
+			 * 	la base de données Oracle.
 			 *
 			 */
 			statement = getConnection().createStatement(type,mode);
-			/*	Pour cela, il nous suffit d'appeler la m�thode executeQuery() en lui passant
-			 * 	comme param�tre, la requete que nous voulons ex�cuter.
-			 * 	L'objet resultat contient le r�sultat de l'ex�cution de la requ�te.
+			/*	Pour cela, il nous suffit d'appeler la méthode executeQuery() en lui passant
+			 * 	comme paramètre, la requete que nous voulons exécuter.
+			 * 	L'objet resultat contient le résultat de l'exécution de la requête.
 			 */
 
 			resultat = statement.executeQuery(requete);
@@ -244,7 +224,7 @@ public class AccesBD {
 	}
 
 	/**
-	 *	M�thode d'ex�cution d'une requete Update (UPDATE, INSERT, DELETE). Elle ne renvoie rien
+	 *	Méthode d'exécution d'une requete Update (UPDATE, INSERT, DELETE). Elle ne renvoie rien
 	 *	@param requete String
 	 */
 	public static void executerUpdate(String requete) throws ClassNotFoundException, SQLException
@@ -281,7 +261,7 @@ public class AccesBD {
 	
 	
 	/**
-	 * m�thode de fermeture d'un objet de type Statement
+	 * méthode de fermeture d'un objet de type Statement
 	 */
 
 	public static void fermerStatement(Statement statement)
@@ -302,7 +282,7 @@ public class AccesBD {
 	}
 
 	/**
-	 * m�thode de fermeture d'un objet de type Statement
+	 * méthode de fermeture d'un objet de type Statement
 	 */
 
 	public static void fermerResultSet(ResultSet resultSet)
@@ -324,7 +304,7 @@ public class AccesBD {
 	
 
 	/**
-	 *  test avec m�thode main()
+	 *  test avec méthode main()
 	*/
 	
 	public static void main(String[] args)
@@ -332,11 +312,11 @@ public class AccesBD {
 		Connection connnect = AccesBD.getConnection();
 		if (connnect!=null)
 		{
-			JOptionPane.showMessageDialog(null, "�a marche");
+			JOptionPane.showMessageDialog(null, "Ca marche");
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, "�a marche PAS !");
+			JOptionPane.showMessageDialog(null, "Ca marche PAS !");
 		}
 
 	}
